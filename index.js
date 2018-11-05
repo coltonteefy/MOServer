@@ -6,8 +6,6 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var session = require('express-session');
 var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var expressValidator = require('express-validator');
 var multer = require('multer');
 var router = express.Router();
 var userRoutes = require('./routes/user');
@@ -37,35 +35,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/api')), router);
 app.use(express.static('upload/'));
 
-// Express Session
-app.use(session({
-    secret: 'secret',
-    saveUninitialized: true,
-    resave: true
-}));
-
-// Passport init
-app.use(passport.initialize());
-app.use(passport.session());
-
-// Express Validator
-app.use(expressValidator({
-    errorFormatter: function (param, msg, value) {
-        var namespace = param.split('.')
-            , root = namespace.shift()
-            , formParam = root;
-
-        while (namespace.length) {
-            formParam += '[' + namespace.shift() + ']';
-        }
-        return {
-            param: formParam,
-            msg: msg,
-            value: value
-        };
-    }
-}));
-
 //----------------------------------ROUTES----------------------------------
 
 //GET
@@ -73,7 +42,6 @@ router.route('/logout').get(userRoutes.logout);
 router.route('/getAllUsers').get(userRoutes.getAllUsers);
 router.route('/deleteUser/:_id').get(userRoutes.deleteUser);
 router.route('/getUserImage/:username').get(userRoutes.getUserImage);
-
 router.route('/getAllMusic').get(userRoutes.getAllMusic);
 router.route('/getSingleUserMusic/:username').get(userRoutes.getSingleUserMusic);
 
@@ -83,10 +51,8 @@ router.route('/login').post(userRoutes.login);
 router.route('/updateUser/:_id').post(userRoutes.updateUser);
 router.route('/addUserEvent/:username').post(userRoutes.addUserEvent);
 router.route('/addUserImage/:username').post(userRoutes.addUserImage);
-
 router.route('/uploadMusic/:username').post(userRoutes.uploadMusic);
 router.route('/updateMusicDetailsImmediately/:username').post(userRoutes.updateMusicDetailsImmediately);
-
 
 // SET APP TO LISTEN ON PORT
 http.listen(app.get('port'), function () {

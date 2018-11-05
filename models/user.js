@@ -24,9 +24,6 @@ var User = mongoose.Schema({
     image: {
         type: String
     },
-    // userMusic: {
-    //     type: String
-    // },
     userMusic: [
         {
             id: Number,
