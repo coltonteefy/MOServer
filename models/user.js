@@ -17,10 +17,6 @@ var User = mongoose.Schema({
         unique: true,
         required: true
     },
-    name: {
-        type: String,
-        required: true
-    },
     image: {
         type: String
     },

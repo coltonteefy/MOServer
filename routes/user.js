@@ -23,22 +23,19 @@ exports.getUserImage = function (req, res) {
 };
 
 exports.register = function (req, res) {
-    var name = req.body.name;
     var email = req.body.email;
     var username = req.body.username;
     var password = req.body.password;
-    var password2 = req.body.password2;
 
     User.findOne({username: {"$regex": "^" + username + "\\b", "$options": "i"}}, function (err, user) {
         User.findOne({email: {"$regex": "^" + email + "\\b", "$options": "i"}}, function (err, mail) {
             if (user || mail) {
-                res.json({message: "Username or email already exists", data: user});
+                res.send("Username or email already exists");
             } else {
                 var newUser = new User({
                     username: username,
                     password: password,
                     email: email,
-                    name: name,
                     image: '',
                     userMusic: [],
                     events: []
@@ -48,8 +45,7 @@ exports.register = function (req, res) {
                     if (err) {
                         res.send(err)
                     } else {
-                        res.json({message: "User info was saved.", data: user});
-                        console.log(user);
+                        res.send("register success");
                     }
                 });
             }
