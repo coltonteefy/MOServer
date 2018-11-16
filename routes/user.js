@@ -183,6 +183,7 @@ exports.uploadMusic = function (req, res) {
             }).then(function () {
                 var uploadedMusic = {
                     id: currentIndex,
+                    artist: req.params.username,
                     title: "",
                     genre: "",
                     description: "",

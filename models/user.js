@@ -23,6 +23,7 @@ var User = mongoose.Schema({
     userMusic: [
         {
             id: Number,
+            artist: String,
             title: String,
             genre: String,
             description: String,
