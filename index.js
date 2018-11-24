@@ -44,6 +44,7 @@ router.route('/deleteUser/:_id').get(userRoutes.deleteUser);
 router.route('/getUserImage/:username').get(userRoutes.getUserImage);
 router.route('/getAllMusic').get(userRoutes.getAllMusic);
 router.route('/getSingleUserMusic/:username').get(userRoutes.getSingleUserMusic);
+router.route('/searchMusic').get(userRoutes.searchMusic);
 
 //POST
 router.route('/register').post(userRoutes.register);

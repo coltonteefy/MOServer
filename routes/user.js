@@ -145,13 +145,30 @@ exports.addUserImage = function (req, res) {
     });
 };
 
+//----------------------------------SEARCH ALL MUSIC----------------------------------
+exports.searchMusic = function (req, res) {
+    const searchTerm = req.query['term'] && req.query['term'].toLowerCase();
+
+    User.find({}, function (err, docs) {
+        if (err) {
+            res.send(err);
+        } else {
+            console.log(docs);
+            const results = docs.map(doc => doc.userMusic)
+                .reduce((prev, curr) => prev.concat(curr), [])
+                .filter(song => `${song.artist} ${song.title} ${song.genre}`.toLowerCase().includes(searchTerm));
+            res.json(results);
+        }
+    });
+};
+
 //----------------------------------GET ALL USERS UPLOADED MUSIC----------------------------------
 exports.getAllMusic = function (req, res) {
     User.find({}, {username: 1, userMusic: 1}, function (err, data) {
         if (err) {
             res.send(err);
         } else {
-            res.send(data)
+            res.send(data);
         }
     })
 };
